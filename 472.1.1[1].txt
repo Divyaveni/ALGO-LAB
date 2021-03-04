@@ -1,0 +1,90 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+
+static string expr;
+bool checkParanthesis()
+
+
+{
+    stack<char> s;
+    char x;
+
+    for (int i = 0; i < expr.length(); i++) {
+        if (expr[i] == '[' || expr[i] == '{' || expr[i] == '(') {
+     
+            s.push(expr[i]);
+            continue;
+        }
+        if (s.empty())
+            return false;
+        switch (expr[i]) {
+        case ']':
+            x = s.top();
+            s.pop();
+            if (x == '{' || x == '(') {
+            cout<<"Position of Mismatch : "<<i<<endl;
+                if (x=='{')
+                {
+                expr[i]='}';
+                }
+                else
+                {
+                expr[i]=')';
+                }
+            }
+            break;
+        case ')':
+            x = s.top();
+            s.pop();
+            if (x == '{' || x == '[') {
+            cout<<"Position of Mismatch : "<<i<<endl;
+            if (x=='{')
+                {
+                expr[i]='}';
+                }
+                else
+                {
+                expr[i]=']';
+                }
+            }
+            break;
+        case '}':
+            x = s.top();
+            s.pop();
+            if (x == '[' || x == '(') {
+            cout<<"Position of Mismatch : "<<i<<endl;
+            if (x=='[')
+                {
+                expr[i]=']';
+                }
+                else
+                {
+                expr[i]=')';
+                }
+               
+            }
+            break;
+        }
+    }
+ 
+    return (s.empty());
+}
+ 
+
+int main()
+{
+    cin>>expr;
+ 
+    if (checkParanthesis()){
+        cout << "Balanced"<<endl;
+    }
+    else{
+        cout << "Not Balanced"<<endl;
+    }
+    cout<<"Balanced equation : "<<endl;
+
+    cout<<expr<<endl;
+
+    return 0;
+}
